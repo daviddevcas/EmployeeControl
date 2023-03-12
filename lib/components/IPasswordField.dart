@@ -2,7 +2,7 @@ import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:flutter/material.dart';
 
 class IPasswordField extends StatelessWidget {
-  IPasswordField(
+  const IPasswordField(
       {Key? key,
       required this.labelText,
       required this.hintText,
@@ -10,10 +10,10 @@ class IPasswordField extends StatelessWidget {
       required this.visibleText})
       : super(key: key);
 
-  String labelText;
-  String hintText;
-  Function pressed;
-  bool visibleText;
+  final String labelText;
+  final String hintText;
+  final Function pressed;
+  final bool visibleText;
 
   @override
   Widget build(BuildContext context) {

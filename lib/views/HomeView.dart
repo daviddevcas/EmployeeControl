@@ -22,15 +22,16 @@ class HomeView extends StatelessWidget {
         () => SafeArea(
           child: IndexedStack(
             index: bottomNavigatorController.selectedIndex.value,
-            children: const [
-              UsersPage(),
-              CameraPage(),
+            children: [
+              const UsersPage(),
+              const CameraPage(),
               RecordsPage(),
             ],
           ),
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
+          index: bottomNavigatorController.selectedIndex.value,
           animationDuration: const Duration(milliseconds: 300),
           backgroundColor: Pallete.whiteColor,
           color: Pallete.gradient1,

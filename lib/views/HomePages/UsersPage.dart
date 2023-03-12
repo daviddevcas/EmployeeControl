@@ -18,7 +18,7 @@ class UsersPage extends StatelessWidget {
               ),
               onPressed: () {},
             ),
-            Expanded(child: ITitleText(title: 'Usuarios')),
+            const Expanded(child: ITitleText(title: 'Usuarios')),
             IconButton(
               padding: const EdgeInsets.all(10),
               icon: const Icon(

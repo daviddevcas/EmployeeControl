@@ -4,14 +4,14 @@ import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:flutter/material.dart';
 
 class IButton extends StatelessWidget {
-  IButton({
+  const IButton({
     Key? key,
     required this.text,
     required this.pressed,
   }) : super(key: key);
 
-  String text;
-  Function pressed;
+  final String text;
+  final Function pressed;
 
   @override
   Widget build(BuildContext context) {

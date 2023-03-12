@@ -12,7 +12,7 @@ class CameraPage extends StatelessWidget {
         Row(
           children: [
             const SizedBox(width: 50),
-            Expanded(child: ITitleText(title: 'Escaner')),
+            const Expanded(child: ITitleText(title: 'Escaner')),
             IconButton(
               padding: const EdgeInsets.all(10),
               icon: const Icon(

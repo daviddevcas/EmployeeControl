@@ -1,3 +1,4 @@
+import 'package:control_empleados_app/views/HomePages/UserPage.dart';
 import 'package:control_empleados_app/views/Views.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: {'auth': (_) => const AuthView(), 'home': (_) => HomeView()},
-      initialRoute: 'home',
+      routes: {
+        'auth': (_) => const AuthView(),
+        'home': (_) => HomeView(),
+        'user': (_) => const UserPage()
+      },
+      initialRoute: 'user',
     );
   }
 }

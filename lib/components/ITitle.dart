@@ -2,9 +2,9 @@ import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:flutter/material.dart';
 
 class ITitleText extends StatelessWidget {
-  ITitleText({Key? key, required this.title}) : super(key: key);
+  const ITitleText({Key? key, required this.title}) : super(key: key);
 
-  String title;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
