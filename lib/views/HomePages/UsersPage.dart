@@ -16,7 +16,9 @@ class UsersPage extends StatelessWidget {
                 Icons.person_add_alt_sharp,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, 'user');
+              },
             ),
             const Expanded(child: ITitleText(title: 'Usuarios')),
             IconButton(

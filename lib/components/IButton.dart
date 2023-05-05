@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:flutter/material.dart';
 
@@ -7,11 +5,11 @@ class IButton extends StatelessWidget {
   const IButton({
     Key? key,
     required this.text,
-    required this.pressed,
+    required this.onPressed,
   }) : super(key: key);
 
   final String text;
-  final Function pressed;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class IButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
       ),
       child: ElevatedButton(
-        onPressed: pressed(),
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           fixedSize: const Size(395, 55),
           backgroundColor: Colors.transparent,
@@ -40,6 +38,7 @@ class IButton extends StatelessWidget {
           text,
           style: const TextStyle(
             fontWeight: FontWeight.w600,
+            color: Colors.white,
             fontSize: 17,
           ),
         ),

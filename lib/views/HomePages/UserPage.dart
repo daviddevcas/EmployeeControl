@@ -1,3 +1,4 @@
+import 'package:control_empleados_app/components/ITextField.dart';
 import 'package:flutter/material.dart';
 
 class UserPage extends StatelessWidget {
@@ -12,13 +13,28 @@ class UserPage extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   icon: const Icon(Icons.arrow_back_ios_sharp))
             ],
           ),
           const Divider(color: Colors.grey),
           Expanded(
-            child: SingleChildScrollView(child: Column()),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                  ),
+                ),
+                ITextField(
+                    labelText: 'labelText',
+                    hintText: 'hintText',
+                    icon: Icon(Icons.person))
+              ],
+            )),
           )
         ],
       )),

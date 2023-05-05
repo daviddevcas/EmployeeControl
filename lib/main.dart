@@ -14,16 +14,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Control de empleados',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       routes: {
-        'auth': (_) => const AuthView(),
+        'auth': (_) => AuthView(),
         'home': (_) => HomeView(),
-        'user': (_) => const UserPage()
+        'user': (_) => const UserPage(),
       },
-      initialRoute: 'user',
+      initialRoute: 'auth',
     );
   }
 }

@@ -6,21 +6,27 @@ class IPasswordField extends StatelessWidget {
       {Key? key,
       required this.labelText,
       required this.hintText,
-      required this.pressed,
-      required this.visibleText})
+      required this.onPressed,
+      required this.visibleText,
+      this.textEditingController,
+      this.errorText})
       : super(key: key);
 
+  final TextEditingController? textEditingController;
+  final Function() onPressed;
+  final String? errorText;
   final String labelText;
   final String hintText;
-  final Function pressed;
   final bool visibleText;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+        controller: textEditingController,
         keyboardType: TextInputType.text,
         obscureText: !visibleText,
         decoration: InputDecoration(
+            errorText: errorText,
             contentPadding: const EdgeInsets.all(27),
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(
@@ -45,7 +51,7 @@ class IPasswordField extends StatelessWidget {
                 visibleText ? Icons.visibility : Icons.visibility_off,
                 color: Pallete.gradient2,
               ),
-              onPressed: pressed(),
+              onPressed: onPressed,
             )));
   }
 }

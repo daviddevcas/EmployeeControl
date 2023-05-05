@@ -1,18 +1,16 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:control_empleados_app/controllers/BottomNavigatorController.dart';
-import 'package:control_empleados_app/tools/Pallete.dart';
-import 'package:control_empleados_app/views/HomePages/CameraPage.dart';
-import 'package:control_empleados_app/views/HomePages/RecordsPage.dart';
-import 'package:control_empleados_app/views/HomePages/UsersPage.dart';
+import 'package:control_empleados_app/views/HomePages/HomePages.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({Key? key}) : super(key: key);
 
-  BottomNavigatorController bottomNavigatorController =
+  final BottomNavigatorController _bottomNavigatorController =
       Get.put(BottomNavigatorController());
 
   @override
@@ -21,7 +19,7 @@ class HomeView extends StatelessWidget {
       body: Obx(
         () => SafeArea(
           child: IndexedStack(
-            index: bottomNavigatorController.selectedIndex.value,
+            index: _bottomNavigatorController.selectedIndex.value,
             children: [
               const UsersPage(),
               const CameraPage(),
@@ -31,13 +29,13 @@ class HomeView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
-          index: bottomNavigatorController.selectedIndex.value,
+          index: _bottomNavigatorController.selectedIndex.value,
           animationDuration: const Duration(milliseconds: 300),
           backgroundColor: Pallete.whiteColor,
           color: Pallete.gradient1,
           buttonBackgroundColor: Pallete.gradient1,
           onTap: ((value) {
-            bottomNavigatorController.changeIndex(value);
+            _bottomNavigatorController.selectedIndex.value = value;
           }),
           items: const [
             Icon(
