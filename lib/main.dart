@@ -1,15 +1,18 @@
 import 'package:control_empleados_app/views/HomePages/UserPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:control_empleados_app/views/Views.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter/material.dart';
 
-void main() async {
+Future main() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
 
   if (!pref.containsKey('password')) {
     pref.setString('password', 'Admin123');
   }
 
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
   runApp(const MyApp());
 }
 

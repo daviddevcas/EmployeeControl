@@ -7,4 +7,5 @@ class UsersController extends GetxController {
   var textControllers = List.generate(7, (i) {
     return TextEditingController();
   }).obs;
+  var users = <User>[].obs;
 }

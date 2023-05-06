@@ -30,7 +30,7 @@ class UserPage extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, 'home');
                   },
                   icon: const Icon(Icons.arrow_back_ios_sharp))
             ],
@@ -42,8 +42,10 @@ class UserPage extends StatelessWidget {
               children: [
                 Container(
                     padding: const EdgeInsets.all(20),
-                    constraints: const BoxConstraints(maxWidth: 250),
-                    child: Image.asset('lib/assets/logo_01.png')),
+                    constraints: const BoxConstraints(maxWidth: 200),
+                    child: user.photopath != null
+                        ? Image.asset('lib/assets/logo_01.png')
+                        : Image.asset('lib/assets/User-icon.png')),
                 BaseTextField(
                     iTextField: ITextField(
                         textEditingController:
@@ -118,7 +120,32 @@ class UserPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: IButton(text: 'Agregar', onPressed: () {}),
+                      child: IButton(
+                          text: user.id > 0 ? 'Actualizar' : 'Agregar',
+                          onPressed: () async {
+                            user.name =
+                                _userController.textControllers.value[0].text;
+                            user.lastname =
+                                _userController.textControllers.value[1].text;
+                            if (_userController
+                                .textControllers.value[2].text.isNum) {
+                              user.age = int.parse(_userController
+                                  .textControllers.value[2].text);
+                            }
+                            user.phone =
+                                _userController.textControllers.value[3].text;
+                            user.address =
+                                _userController.textControllers.value[4].text;
+                            user.area =
+                                _userController.textControllers.value[5].text;
+                            user.workplace =
+                                _userController.textControllers.value[6].text;
+                            if (user.id > 0) {
+                              await user.update();
+                            } else {
+                              user.id = await User.insert(user);
+                            }
+                          }),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(5.0),
