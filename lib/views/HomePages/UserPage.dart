@@ -5,6 +5,7 @@ import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:control_empleados_app/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quickalert/quickalert.dart';
 
 class UserPage extends StatelessWidget {
   UserPage({Key? key}) : super(key: key);
@@ -30,6 +31,7 @@ class UserPage extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
+                    _userController.readAll();
                     Navigator.pushReplacementNamed(context, 'home');
                   },
                   icon: const Icon(Icons.arrow_back_ios_sharp))
@@ -122,7 +124,7 @@ class UserPage extends StatelessWidget {
                       padding: const EdgeInsets.all(5.0),
                       child: IButton(
                           text: user.id > 0 ? 'Actualizar' : 'Agregar',
-                          onPressed: () async {
+                          onPressed: () {
                             user.name =
                                 _userController.textControllers.value[0].text;
                             user.lastname =
@@ -141,9 +143,24 @@ class UserPage extends StatelessWidget {
                             user.workplace =
                                 _userController.textControllers.value[6].text;
                             if (user.id > 0) {
-                              await user.update();
+                              user.update().then((value) {
+                                QuickAlert.show(
+                                  context: context,
+                                  type: QuickAlertType.success,
+                                  text:
+                                      'Se ha actualizado la información del empleado de manera satisfactoria.',
+                                );
+                              });
                             } else {
-                              user.id = await User.insert(user);
+                              User.insert(user).then((value) {
+                                user.id = value;
+                                QuickAlert.show(
+                                  context: context,
+                                  type: QuickAlertType.success,
+                                  text:
+                                      'Se ha guardado la información del empleado de manera satisfactoria.',
+                                );
+                              });
                             }
                           }),
                     ),

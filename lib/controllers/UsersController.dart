@@ -8,4 +8,8 @@ class UsersController extends GetxController {
     return TextEditingController();
   }).obs;
   var users = <User>[].obs;
+
+  Future readAll() async {
+    users.value = await User.readAll();
+  }
 }

@@ -56,6 +56,11 @@ class User extends DBProvider {
     return await db.update('users', toMap(), where: 'id=?', whereArgs: [id]);
   }
 
+  Future<int> delete() async {
+    final db = await DBProvider.openDB();
+    return await db.delete('users', where: 'id=?', whereArgs: [id]);
+  }
+
   static Future<List<User>> readAll() async {
     final db = await DBProvider.openDB();
 

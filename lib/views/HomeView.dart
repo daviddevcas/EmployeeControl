@@ -5,7 +5,6 @@ import 'package:control_empleados_app/controllers/UsersController.dart';
 import 'package:control_empleados_app/views/HomePages/HomePages.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:control_empleados_app/tools/Pallete.dart';
-import 'package:control_empleados_app/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +13,6 @@ class HomeView extends StatelessWidget {
 
   final BottomNavigatorController _bottomNavigatorController =
       Get.put(BottomNavigatorController());
-  final UsersController _userController = Get.put(UsersController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,14 +34,8 @@ class HomeView extends StatelessWidget {
           backgroundColor: Pallete.whiteColor,
           color: Pallete.gradient1,
           buttonBackgroundColor: Pallete.gradient1,
-          onTap: ((value) async {
+          onTap: ((value) {
             _bottomNavigatorController.selectedIndex.value = value;
-            switch (value) {
-              case 0:
-                _userController.users.value = await User.readAll();
-                break;
-              default:
-            }
           }),
           items: const [
             Icon(
