@@ -2,6 +2,7 @@ import 'package:control_empleados_app/controllers/BottomNavigatorController.dart
 import 'package:control_empleados_app/controllers/AuthController.dart';
 import 'package:control_empleados_app/components/IPasswordField.dart';
 import 'package:control_empleados_app/components/IButton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,24 +48,27 @@ class AuthView extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: IButton(
                   text: 'Ingresar',
-                  onPressed: () {
-                    String text = _authController.passwordController.value.text;
-                    if (text == '' || text.isEmpty) {
-                      _authController.passwordError.value =
-                          'El campo está vacío';
-                      return;
-                    }
+                  onPressed: () async {
+                    await SharedPreferences.getInstance().then((value) {
+                      String text =
+                          _authController.passwordController.value.text;
+                      if (text == '' || text.isEmpty) {
+                        _authController.passwordError.value =
+                            'El campo está vacío';
+                        return;
+                      }
 
-                    if (text != '123') {
-                      _authController.passwordError.value =
-                          'La contraseña es incorrecta';
-                      return;
-                    }
+                      if (text != value.getString('password')) {
+                        _authController.passwordError.value =
+                            'La contraseña es incorrecta';
+                        return;
+                      }
 
-                    _authController.passwordError.value = '';
-                    _authController.passwordController.value.text = '';
-                    _bottomNavigatorController.selectedIndex.value = 1;
-                    Navigator.pushReplacementNamed(context, 'home');
+                      _authController.passwordError.value = '';
+                      _authController.passwordController.value.text = '';
+                      _bottomNavigatorController.selectedIndex.value = 1;
+                      Navigator.pushReplacementNamed(context, 'home');
+                    });
                   },
                 ),
               )
