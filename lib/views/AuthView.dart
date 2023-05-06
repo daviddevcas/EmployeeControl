@@ -1,6 +1,7 @@
-import 'package:control_empleados_app/components/IButton.dart';
+import 'package:control_empleados_app/controllers/BottomNavigatorController.dart';
 import 'package:control_empleados_app/controllers/AuthController.dart';
 import 'package:control_empleados_app/components/IPasswordField.dart';
+import 'package:control_empleados_app/components/IButton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,8 @@ class AuthView extends StatelessWidget {
   AuthView({Key? key}) : super(key: key);
 
   final AuthController _authController = Get.put(AuthController());
+  final BottomNavigatorController _bottomNavigatorController =
+      Get.put(BottomNavigatorController());
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +62,8 @@ class AuthView extends StatelessWidget {
                     }
 
                     _authController.passwordError.value = '';
+                    _authController.passwordController.value.text = '';
+                    _bottomNavigatorController.selectedIndex.value = 1;
                     Navigator.pushReplacementNamed(context, 'home');
                   },
                 ),

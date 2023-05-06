@@ -6,6 +6,7 @@ class User {
   String address = "";
   String area = "";
   String workplace = "";
+  String? photopath;
   int age = 0;
 
   void reload() {
@@ -16,6 +17,7 @@ class User {
     address = "";
     area = "";
     workplace = "";
+    photopath = null;
     age = 0;
   }
 }

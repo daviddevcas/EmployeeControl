@@ -25,7 +25,9 @@ class RecordsPage extends StatelessWidget {
                 Icons.logout,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, 'auth');
+              },
             )
           ],
         ),

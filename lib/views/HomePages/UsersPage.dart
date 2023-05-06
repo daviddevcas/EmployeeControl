@@ -1,8 +1,12 @@
+import 'package:control_empleados_app/controllers/UsersController.dart';
 import 'package:control_empleados_app/components/ITitle.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UsersPage extends StatelessWidget {
-  const UsersPage({Key? key}) : super(key: key);
+  UsersPage({Key? key}) : super(key: key);
+
+  final UsersController _userController = Get.put(UsersController());
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +21,7 @@ class UsersPage extends StatelessWidget {
                 size: 30,
               ),
               onPressed: () {
+                _userController.userSelected.value.reload();
                 Navigator.pushNamed(context, 'user');
               },
             ),
@@ -27,7 +32,9 @@ class UsersPage extends StatelessWidget {
                 Icons.logout,
                 size: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, 'auth');
+              },
             )
           ],
         ),

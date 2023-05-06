@@ -21,7 +21,7 @@ class HomeView extends StatelessWidget {
           child: IndexedStack(
             index: _bottomNavigatorController.selectedIndex.value,
             children: [
-              const UsersPage(),
+              UsersPage(),
               const CameraPage(),
               RecordsPage(),
             ],
