@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:control_empleados_app/services/DBProvider.dart';
+import 'package:flutter/material.dart';
 
 class User extends DBProvider {
   int id = 0;
@@ -49,6 +52,21 @@ class User extends DBProvider {
       'photopath': photopath,
       'age': age
     };
+  }
+
+  Future<Image> getWidgetImage() async {
+    if (photopath == null) {
+      return Image.asset('lib/assets/User-icon.png');
+    }
+
+    if (await File(photopath!).exists()) {
+      return Image.file(
+        File(photopath!),
+        fit: BoxFit.cover,
+      );
+    }
+
+    return Image.asset('lib/assets/User-icon.png');
   }
 
   Future<int> update() async {

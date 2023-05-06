@@ -1,11 +1,18 @@
-import 'package:control_empleados_app/components/IButton.dart';
+import 'dart:io';
+
 import 'package:control_empleados_app/controllers/UsersController.dart';
 import 'package:control_empleados_app/components/ITextField.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
+import 'package:control_empleados_app/components/IButton.dart';
 import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:control_empleados_app/models/User.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quickalert/quickalert.dart';
 
 class UserPage extends StatelessWidget {
   UserPage({Key? key}) : super(key: key);
@@ -23,6 +30,8 @@ class UserPage extends StatelessWidget {
     _userController.textControllers.value[4].text = user.address;
     _userController.textControllers.value[5].text = user.area;
     _userController.textControllers.value[6].text = user.workplace;
+    Image photo = _userController.imageuser.value;
+
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -31,8 +40,9 @@ class UserPage extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                    _userController.readAll();
-                    Navigator.pushReplacementNamed(context, 'home');
+                    _userController.readAll().then((value) {
+                      Navigator.pushReplacementNamed(context, 'home');
+                    });
                   },
                   icon: const Icon(Icons.arrow_back_ios_sharp))
             ],
@@ -42,12 +52,74 @@ class UserPage extends StatelessWidget {
             child: SingleChildScrollView(
                 child: Column(
               children: [
+                ExpandedTile(
+                    theme: const ExpandedTileThemeData(
+                      headerPadding: EdgeInsets.all(15.0),
+                      contentPadding: EdgeInsets.all(5.0),
+                    ),
+                    controller: _userController.expandedTileController.value,
+                    title: const Text('Código QR'),
+                    content: Center(
+                      child: user.id > 0
+                          ? GestureDetector(
+                              onTap: () {
+                                try {
+                                  _userController.screenshotController.value
+                                      .capture(
+                                          delay:
+                                              const Duration(milliseconds: 10))
+                                      .then((image) async {
+                                    if (image != null) {
+                                      final directory =
+                                          await getApplicationDocumentsDirectory();
+                                      final imagePath = await File(
+                                              '${directory.path}/qr-${user.id}-${user.name}.png')
+                                          .create();
+                                      imagePath
+                                          .writeAsBytes(image)
+                                          .then((value) {
+                                        QuickAlert.show(
+                                          context: context,
+                                          type: QuickAlertType.success,
+                                          text:
+                                              'Se ha guardado la imagen QR del empleado de manera satisfactoria.',
+                                        );
+                                      });
+                                    }
+                                  });
+                                } catch (e) {
+                                  QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.error,
+                                    title: 'Oops...',
+                                    text: 'Lo siento, ha ocurrido un error.',
+                                  );
+                                }
+                              },
+                              child: Screenshot(
+                                controller:
+                                    _userController.screenshotController.value,
+                                child: QrImage(
+                                  data: '${user.id}',
+                                  version: QrVersions.auto,
+                                  size: 150,
+                                  errorStateBuilder: (cxt, err) {
+                                    return const Center(
+                                      child: Text(
+                                        'Ha ocurrido algún problema...',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
+                          : Container(),
+                    )),
                 Container(
                     padding: const EdgeInsets.all(20),
                     constraints: const BoxConstraints(maxWidth: 200),
-                    child: user.photopath != null
-                        ? Image.asset('lib/assets/logo_01.png')
-                        : Image.asset('lib/assets/User-icon.png')),
+                    child: photo),
                 BaseTextField(
                     iTextField: ITextField(
                         textEditingController:
@@ -142,31 +214,51 @@ class UserPage extends StatelessWidget {
                                 _userController.textControllers.value[5].text;
                             user.workplace =
                                 _userController.textControllers.value[6].text;
-                            if (user.id > 0) {
-                              user.update().then((value) {
-                                QuickAlert.show(
-                                  context: context,
-                                  type: QuickAlertType.success,
-                                  text:
-                                      'Se ha actualizado la información del empleado de manera satisfactoria.',
-                                );
-                              });
-                            } else {
-                              User.insert(user).then((value) {
-                                user.id = value;
-                                QuickAlert.show(
-                                  context: context,
-                                  type: QuickAlertType.success,
-                                  text:
-                                      'Se ha guardado la información del empleado de manera satisfactoria.',
-                                );
-                              });
-                            }
+                            _userController.userSelected.value = user;
+                            _userController.save().then((value) {
+                              Navigator.pushReplacementNamed(context, 'user');
+                              QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.success,
+                                text: value,
+                              );
+                            });
                           }),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: IButton(text: 'Subir Foto', onPressed: () {}),
+                      child: IButton(
+                          text: 'Subir Foto',
+                          onPressed: () async {
+                            try {
+                              FilePickerResult? result = await FilePicker
+                                  .platform
+                                  .pickFiles(type: FileType.image);
+
+                              if (result != null) {
+                                user.photopath = result.files.single.path!;
+                                _userController.userSelected.value = user;
+                                await user.update();
+                                user.getWidgetImage().then((value) {
+                                  _userController.imageuser.value = value;
+                                  Navigator.pushReplacementNamed(
+                                      context, 'user');
+                                  QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.success,
+                                    text: 'Se ha subido la imagen con éxito.',
+                                  );
+                                });
+                              }
+                            } catch (e) {
+                              QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.error,
+                                title: 'Oops...',
+                                text: 'Lo siento, ha ocurrido un error.',
+                              );
+                            }
+                          }),
                     )
                   ],
                 )

@@ -1,10 +1,10 @@
-import 'package:control_empleados_app/components/ITitle.dart';
 import 'package:control_empleados_app/controllers/RecordsController.dart';
-import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
-import 'package:get/get.dart';
+import 'package:control_empleados_app/components/ITitle.dart';
+import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RecordsPage extends StatelessWidget {
   RecordsPage({Key? key}) : super(key: key);

@@ -73,9 +73,10 @@ class UsersPage extends StatelessWidget {
                                     confirmBtnColor: Colors.red,
                                     onConfirmBtnTap: () {
                                       user.delete().then((value) {
-                                        _userController.readAll();
-                                        Navigator.pushReplacementNamed(
-                                            context, 'home');
+                                        _userController.readAll().then((value) {
+                                          Navigator.pushReplacementNamed(
+                                              context, 'home');
+                                        });
                                       });
                                     },
                                     onCancelBtnTap: () {
@@ -85,7 +86,10 @@ class UsersPage extends StatelessWidget {
                               },
                               onTap: () {
                                 _userController.userSelected.value = user;
-                                Navigator.pushNamed(context, 'user');
+                                user.getWidgetImage().then((value) {
+                                  _userController.imageuser.value = value;
+                                  Navigator.pushNamed(context, 'user');
+                                });
                               },
                               leading: const Icon(
                                 Icons.person,
