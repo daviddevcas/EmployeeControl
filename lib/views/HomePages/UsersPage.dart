@@ -1,6 +1,5 @@
 import 'package:control_empleados_app/controllers/UsersController.dart';
 import 'package:control_empleados_app/components/ITitle.dart';
-import 'package:control_empleados_app/models/User.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
