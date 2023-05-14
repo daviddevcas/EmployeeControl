@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:control_empleados_app/views/HomePages/UserPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:control_empleados_app/views/Views.dart';
@@ -12,8 +14,10 @@ Future main() async {
     pref.setString('password', 'Admin123');
   }
 
-  sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
+  if (Platform.isWindows) {
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
   runApp(const MyApp());
 }
 
