@@ -41,8 +41,9 @@ class UserPage extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     _userController.readAll().then((value) {
-                      Get.forceAppUpdate();
-                      Navigator.pop(context);
+                      Get.forceAppUpdate().then((_) {
+                        Navigator.pop(context);
+                      });
                     });
                   },
                   icon: const Icon(Icons.arrow_back_ios_sharp))
@@ -217,12 +218,13 @@ class UserPage extends StatelessWidget {
                                 _userController.textControllers.value[6].text;
 
                             _userController.save(user).then((value) {
-                              Get.forceAppUpdate();
-                              QuickAlert.show(
-                                context: context,
-                                type: QuickAlertType.success,
-                                text: value,
-                              );
+                              Get.forceAppUpdate().then((_) {
+                                QuickAlert.show(
+                                  context: context,
+                                  type: QuickAlertType.success,
+                                  text: value,
+                                );
+                              });
                             });
                           }),
                     ),
@@ -242,12 +244,13 @@ class UserPage extends StatelessWidget {
                                 await user.update();
                                 user.getWidgetImage().then((value) {
                                   _userController.imageuser.value = value;
-                                  Get.forceAppUpdate();
-                                  QuickAlert.show(
-                                    context: context,
-                                    type: QuickAlertType.success,
-                                    text: 'Se ha subido la imagen con éxito.',
-                                  );
+                                  Get.forceAppUpdate().then((_) {
+                                    QuickAlert.show(
+                                      context: context,
+                                      type: QuickAlertType.success,
+                                      text: 'Se ha subido la imagen con éxito.',
+                                    );
+                                  });
                                 });
                               }
                             } catch (e) {
