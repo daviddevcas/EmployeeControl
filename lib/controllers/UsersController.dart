@@ -18,9 +18,8 @@ class UsersController extends GetxController {
     users.value = await User.readAll();
   }
 
-  Future<String> save() async {
+  Future<String> save(User user) async {
     String text;
-    var user = userSelected.value;
 
     if (user.id > 0) {
       await user.update();
@@ -33,7 +32,6 @@ class UsersController extends GetxController {
     }
 
     userSelected.value = user;
-
     return text;
   }
 }

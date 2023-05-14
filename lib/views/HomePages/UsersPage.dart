@@ -73,8 +73,8 @@ class UsersPage extends StatelessWidget {
                                     onConfirmBtnTap: () {
                                       user.delete().then((value) {
                                         _userController.readAll().then((value) {
-                                          Navigator.pushReplacementNamed(
-                                              context, 'home');
+                                          Get.forceAppUpdate();
+                                          Navigator.pop(context);
                                         });
                                       });
                                     },

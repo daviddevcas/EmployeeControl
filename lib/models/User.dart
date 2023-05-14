@@ -79,6 +79,18 @@ class User extends DBProvider {
     return await db.delete('users', where: 'id=?', whereArgs: [id]);
   }
 
+  static Future<User?> readById(int id) async {
+    final db = await DBProvider.openDB();
+
+    final request = await db.query('users', where: 'id=?', whereArgs: [id]);
+
+    if (request.isNotEmpty) {
+      return request.map((user) => User.fromMap(user)).toList()[0];
+    } else {
+      return null;
+    }
+  }
+
   static Future<List<User>> readAll() async {
     final db = await DBProvider.openDB();
 

@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
             index: _bottomNavigatorController.selectedIndex.value,
             children: [
               UsersPage(),
-              const CameraPage(),
+              CameraPage(),
               RecordsPage(),
             ],
           ),

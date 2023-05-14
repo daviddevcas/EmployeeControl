@@ -41,7 +41,8 @@ class UserPage extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     _userController.readAll().then((value) {
-                      Navigator.pushReplacementNamed(context, 'home');
+                      Get.forceAppUpdate();
+                      Navigator.pop(context);
                     });
                   },
                   icon: const Icon(Icons.arrow_back_ios_sharp))
@@ -114,7 +115,7 @@ class UserPage extends StatelessWidget {
                                 ),
                               ),
                             )
-                          : Container(),
+                          : const Text('Código no disponible.'),
                     )),
                 Container(
                     padding: const EdgeInsets.all(20),
@@ -214,9 +215,9 @@ class UserPage extends StatelessWidget {
                                 _userController.textControllers.value[5].text;
                             user.workplace =
                                 _userController.textControllers.value[6].text;
-                            _userController.userSelected.value = user;
-                            _userController.save().then((value) {
-                              Navigator.pushReplacementNamed(context, 'user');
+
+                            _userController.save(user).then((value) {
+                              Get.forceAppUpdate();
                               QuickAlert.show(
                                 context: context,
                                 type: QuickAlertType.success,
@@ -241,8 +242,7 @@ class UserPage extends StatelessWidget {
                                 await user.update();
                                 user.getWidgetImage().then((value) {
                                   _userController.imageuser.value = value;
-                                  Navigator.pushReplacementNamed(
-                                      context, 'user');
+                                  Get.forceAppUpdate();
                                   QuickAlert.show(
                                     context: context,
                                     type: QuickAlertType.success,

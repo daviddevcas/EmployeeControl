@@ -1,9 +1,14 @@
+import 'package:control_empleados_app/controllers/CameraController.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:control_empleados_app/components/ITitle.dart';
 import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 
 class CameraPage extends StatelessWidget {
-  const CameraPage({Key? key}) : super(key: key);
+  CameraPage({Key? key}) : super(key: key);
+
+  final CameraController _cameraController = CameraController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +38,28 @@ class CameraPage extends StatelessWidget {
             children: [
               FittedBox(
                   child: GestureDetector(
+                onTap: () {
+                  FlutterBarcodeScanner.scanBarcode(
+                          '#3D8BEF', 'Cancelar', false, ScanMode.QR)
+                      .then((scan) {
+                    _cameraController.insert(scan, 0).then((value) {
+                      if (value['success']) {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.success,
+                          text: value['message'],
+                        );
+                      } else {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.error,
+                          title: 'Oops...',
+                          text: value['message'],
+                        );
+                      }
+                    });
+                  });
+                },
                 child: Container(
                   width: 130,
                   height: 130,
@@ -61,6 +88,28 @@ class CameraPage extends StatelessWidget {
               ),
               FittedBox(
                   child: GestureDetector(
+                onTap: () {
+                  FlutterBarcodeScanner.scanBarcode(
+                          '#3D8BEF', 'Cancelar', false, ScanMode.QR)
+                      .then((scan) {
+                    _cameraController.insert(scan, 1).then((value) {
+                      if (value['success']) {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.success,
+                          text: value['message'],
+                        );
+                      } else {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.error,
+                          title: 'Oops...',
+                          text: value['message'],
+                        );
+                      }
+                    });
+                  });
+                },
                 child: Container(
                   width: 130,
                   height: 130,
