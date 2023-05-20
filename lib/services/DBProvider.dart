@@ -5,21 +5,30 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 
 class DBProvider {
-  @protected
-  static Future<Database> openDB() async {
-    return openDatabase(
-      p.join(await getDatabasesPath(), 'EmployeeControl'),
-      version: 1,
-      onCreate: (db, version) {
-        return db.execute('''
+  static const String users = '''
             CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
             name VARCHAR, lastname VARCHAR, phone VARCHAR, address VARCHAR, 
             area VARCHAR, workplace VARCHAR,photopath VARCHAR,age INTEGER)
-
+            ''';
+  static const String records = '''
             CREATE TABLE records(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             userId INTEGER NOT NULL, typeRecord INTEGER, createdAt DATETIME,
             FOREIGN KEY (id) REFERENCES users(id))
-            ''');
+            ''';
+  @protected
+  static Future<Database> openDB() async {
+    //databaseFactory.deleteDatabase(p.join(await getDatabasesPath(), 'EmployeeControl'));
+    return openDatabase(
+      p.join(await getDatabasesPath(), 'EmployeeControl'),
+      version: 2,
+      onCreate: (db, version) async {
+        await db.execute(users);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion == 1 && newVersion == 2) {
+          await db.execute(users);
+          await db.execute(records);
+        }
       },
     );
   }
