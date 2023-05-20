@@ -43,8 +43,10 @@ class Record extends DBProvider {
   static Future<List<Record>> readAll(int typeRecord) async {
     final db = await DBProvider.openDB();
 
-    final request = await db
-        .query('records', where: 'typeRecord=?', whereArgs: [typeRecord]);
+    final request = await db.query('records',
+        where: 'typeRecord=? AND createdAt=?',
+        whereArgs: [typeRecord, DateTime.now().toString()],
+        orderBy: 'createdAt');
 
     if (request.isNotEmpty) {
       return request.map((record) => Record.fromMap(record)).toList();

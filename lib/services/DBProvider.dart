@@ -20,15 +20,13 @@ class DBProvider {
     //databaseFactory.deleteDatabase(p.join(await getDatabasesPath(), 'EmployeeControl'));
     return openDatabase(
       p.join(await getDatabasesPath(), 'EmployeeControl'),
-      version: 2,
+      version: 1,
       onCreate: (db, version) async {
         await db.execute(users);
+        await db.execute(records);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion == 1 && newVersion == 2) {
-          await db.execute(users);
-          await db.execute(records);
-        }
+        if (oldVersion == 1 && newVersion == 2) {}
       },
     );
   }
