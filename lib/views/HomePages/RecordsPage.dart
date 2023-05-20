@@ -9,10 +9,11 @@ import 'package:get/get.dart';
 class RecordsPage extends StatelessWidget {
   RecordsPage({Key? key}) : super(key: key);
 
-  RecordsController recordsController = Get.put(RecordsController());
+  final RecordsController _recordsController = Get.put(RecordsController());
 
   @override
   Widget build(BuildContext context) {
+    _recordsController.readAll();
     return Column(
       children: [
         Row(
@@ -59,19 +60,22 @@ class RecordsPage extends StatelessWidget {
                   contentPadding: EdgeInsets.all(5.0),
                 ),
                 controller:
-                    recordsController.expandedTileControllerInputs.value,
+                    _recordsController.expandedTileControllerInputs.value,
                 title: const Text('Entradas'),
                 content: Center(
-                  child: Column(children: [
-                    ListTile(
-                      leading: Icon(
-                        Icons.person,
-                        size: 30,
-                      ),
-                      title: Text('Nombre'),
-                      subtitle: Text('Fecha'),
-                    ),
-                  ]),
+                  child: Column(
+                      children: _recordsController.inputs.value.isEmpty
+                          ? const [Text('No cuenta con registros.')]
+                          : _recordsController.inputs.value
+                              .map((record) => ListTile(
+                                    leading: const Icon(
+                                      Icons.person,
+                                      size: 30,
+                                    ),
+                                    title: Text(record.user.name),
+                                    subtitle: Text(record.createdAt.toString()),
+                                  ))
+                              .toList()),
                 )),
             ExpandedTile(
                 theme: const ExpandedTileThemeData(
@@ -79,13 +83,22 @@ class RecordsPage extends StatelessWidget {
                   contentPadding: EdgeInsets.all(5.0),
                 ),
                 controller:
-                    recordsController.expandedTileControllerOutputs.value,
+                    _recordsController.expandedTileControllerOutputs.value,
                 title: const Text('Salidas'),
-                content: const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Text('No existen registros.'),
-                  ),
+                content: Center(
+                  child: Column(
+                      children: _recordsController.outputs.value.isEmpty
+                          ? const [Text('No cuenta con registros.')]
+                          : _recordsController.outputs.value
+                              .map((record) => ListTile(
+                                    leading: const Icon(
+                                      Icons.person,
+                                      size: 30,
+                                    ),
+                                    title: Text(record.user.name),
+                                    subtitle: Text(record.createdAt.toString()),
+                                  ))
+                              .toList()),
                 ))
           ]),
         ))

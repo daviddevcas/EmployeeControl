@@ -1,3 +1,4 @@
+import 'package:control_empleados_app/models/User.dart';
 import 'package:control_empleados_app/services/DBProvider.dart';
 
 class Record extends DBProvider {
@@ -6,6 +7,7 @@ class Record extends DBProvider {
   //type = {0:inputs,1:outputs}
   int typeRecord = 0;
   DateTime createdAt = DateTime.now();
+  User user = User();
 
   Record();
 
@@ -27,10 +29,22 @@ class Record extends DBProvider {
     };
   }
 
-  static Future<List<Record>> readAll() async {
+  Future<User> readUser() async {
     final db = await DBProvider.openDB();
 
-    final request = await db.query('records');
+    final request = await db.query('users', where: 'id=?', whereArgs: [userId]);
+    if (request.isNotEmpty) {
+      return request.map((user) => User.fromMap(user)).toList()[0];
+    } else {
+      return User();
+    }
+  }
+
+  static Future<List<Record>> readAll(int typeRecord) async {
+    final db = await DBProvider.openDB();
+
+    final request = await db
+        .query('records', where: 'typeRecord=?', whereArgs: [typeRecord]);
 
     if (request.isNotEmpty) {
       return request.map((record) => Record.fromMap(record)).toList();

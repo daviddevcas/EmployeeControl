@@ -18,6 +18,7 @@ class UserPage extends StatelessWidget {
   UserPage({Key? key}) : super(key: key);
 
   final UsersController _userController = Get.put(UsersController());
+  final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class UserPage extends StatelessWidget {
                           ? GestureDetector(
                               onTap: () {
                                 try {
-                                  _userController.screenshotController.value
+                                  _screenshotController
                                       .capture(
                                           delay:
                                               const Duration(milliseconds: 10))
@@ -74,6 +75,7 @@ class UserPage extends StatelessWidget {
                                     if (image != null) {
                                       final directory =
                                           await getApplicationDocumentsDirectory();
+
                                       final imagePath = await File(
                                               '${directory.path}/qr-${user.id}-${user.name}.png')
                                           .create();
@@ -99,8 +101,7 @@ class UserPage extends StatelessWidget {
                                 }
                               },
                               child: Screenshot(
-                                controller:
-                                    _userController.screenshotController.value,
+                                controller: _screenshotController,
                                 child: QrImage(
                                   data: '${user.id}',
                                   version: QrVersions.auto,
