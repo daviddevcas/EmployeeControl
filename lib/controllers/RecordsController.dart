@@ -20,5 +20,8 @@ class RecordsController extends GetxController {
     for (var element in outputs.value) {
       element.user = await element.readUser();
     }
+
+    print(inputs);
+    print(outputs);
   }
 }
