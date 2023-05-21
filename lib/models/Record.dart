@@ -46,9 +46,11 @@ class Record extends DBProvider {
     }
   }
 
-  static Future<List<Record>> readAll(int typeRecord) async {
+  static Future<List<Record>> readAll(int typeRecord,
+      {bool isDiary = true}) async {
     final db = await DBProvider.openDB();
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final DateFormat formatter =
+        isDiary ? DateFormat('yyyy-MM-dd') : DateFormat('yyyy-MM');
 
     final request = await db.query(
       'records',

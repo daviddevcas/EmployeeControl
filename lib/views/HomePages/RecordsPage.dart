@@ -1,9 +1,9 @@
 import 'package:control_empleados_app/controllers/RecordsController.dart';
-import 'package:control_empleados_app/models/Record.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:control_empleados_app/components/ITitle.dart';
 import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,7 +67,27 @@ class RecordsPage extends StatelessWidget {
             children: [
               OptionButton(
                 text: 'Registros generales',
-                pressed: () {},
+                pressed: () {
+                  try {
+                    _recordsController
+                        .createExcelOfGeneralRecords(
+                            isDiary: _recordsController.active.value)
+                        .then((_) {
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text: 'Se ha creado el Excel correctamente.',
+                      );
+                    });
+                  } catch (_) {
+                    QuickAlert.show(
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: 'Oops...',
+                      text: 'Lo siento, ha ocurrido un error.',
+                    );
+                  }
+                },
               ),
               OptionButton(
                 text: 'Registros de no cumplimiento',

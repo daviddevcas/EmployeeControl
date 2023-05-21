@@ -91,7 +91,7 @@ class UserPage extends StatelessWidget {
                                       });
                                     }
                                   });
-                                } catch (e) {
+                                } catch (_) {
                                   QuickAlert.show(
                                     context: context,
                                     type: QuickAlertType.error,
