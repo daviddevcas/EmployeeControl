@@ -1,4 +1,5 @@
 import 'package:control_empleados_app/controllers/RecordsController.dart';
+import 'package:control_empleados_app/models/Record.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:control_empleados_app/components/ITitle.dart';
 import 'package:control_empleados_app/tools/Pallete.dart';
@@ -33,6 +34,31 @@ class RecordsPage extends StatelessWidget {
           ],
         ),
         const Divider(color: Colors.grey),
+        Align(
+          alignment: Alignment.topLeft,
+          child: Wrap(
+            alignment: WrapAlignment.start,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Reporte mensual'),
+              ),
+              Switch(
+                value: _recordsController.active.value,
+                onChanged: (value) {
+                  _recordsController.active.value = value;
+                  Get.forceAppUpdate();
+                },
+                activeColor: Pallete.gradient1,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Reporte diario'),
+              ),
+            ],
+          ),
+        ),
         Align(
           alignment: Alignment.topLeft,
           child: Wrap(

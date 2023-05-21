@@ -1,5 +1,6 @@
-import 'package:control_empleados_app/models/User.dart';
 import 'package:control_empleados_app/services/DBProvider.dart';
+import 'package:control_empleados_app/models/User.dart';
+import 'package:intl/intl.dart';
 
 class Record extends DBProvider {
   int id = 0;
@@ -11,6 +12,8 @@ class Record extends DBProvider {
 
   Record();
 
+  Record.set(int userId, int typeRecord, DateTime createdAt);
+
   Record.fromMap(Map<String, dynamic> record) {
     id = record['id'];
     userId = record['userId'];
@@ -19,7 +22,8 @@ class Record extends DBProvider {
   }
 
   String dateToString() {
-    return '${createdAt.day}-${createdAt.month}-${createdAt.year} ${createdAt.hour}:${createdAt.minute}';
+    final DateFormat formatter = DateFormat('dd-MM-yyyy HH:mm');
+    return formatter.format(createdAt);
   }
 
   Map<String, dynamic> toMap({bool newrecord = false}) {
@@ -44,9 +48,14 @@ class Record extends DBProvider {
 
   static Future<List<Record>> readAll(int typeRecord) async {
     final db = await DBProvider.openDB();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
-    final request = await db.query('records',
-        where: 'typeRecord=?', whereArgs: [typeRecord], orderBy: 'createdAt');
+    final request = await db.query(
+      'records',
+      where: 'typeRecord=? AND createdAt LIKE ?',
+      whereArgs: [typeRecord, '%${formatter.format(DateTime.now())}%'],
+      orderBy: 'createdAt',
+    );
 
     if (request.isNotEmpty) {
       return request.map((record) => Record.fromMap(record)).toList();

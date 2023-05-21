@@ -4,11 +4,12 @@ import 'package:get/get.dart';
 
 class RecordsController extends GetxController {
   var expandedTileControllerInputs =
-      ExpandedTileController(isExpanded: true).obs;
+      ExpandedTileController(isExpanded: false).obs;
   var expandedTileControllerOutputs =
-      ExpandedTileController(isExpanded: true).obs;
+      ExpandedTileController(isExpanded: false).obs;
   var inputs = <Record>[].obs;
   var outputs = <Record>[].obs;
+  var active = false.obs;
 
   Future readAll() async {
     inputs.value = await Record.readAll(0);
