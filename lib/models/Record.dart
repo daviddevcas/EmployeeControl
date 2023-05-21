@@ -11,8 +11,6 @@ class Record extends DBProvider {
 
   Record();
 
-  Record.set(int userId, int typeRecord, DateTime createdAt);
-
   Record.fromMap(Map<String, dynamic> record) {
     id = record['id'];
     userId = record['userId'];
