@@ -22,7 +22,9 @@ class CameraController {
     record.typeRecord = typeRecord;
     record.createdAt = DateTime.now();
     var out = await Record.insert(record);
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     print(out);
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     return {"success": true, "message": 'Registro completado.'};
   }
 }
