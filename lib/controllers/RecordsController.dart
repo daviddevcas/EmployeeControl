@@ -1,6 +1,5 @@
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:control_empleados_app/models/Record.dart';
-import 'package:control_empleados_app/models/User.dart';
 import 'package:get/get.dart';
 
 class RecordsController extends GetxController {

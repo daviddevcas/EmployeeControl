@@ -92,6 +92,7 @@ class CameraPage extends StatelessWidget {
                   FlutterBarcodeScanner.scanBarcode(
                           '#3D8BEF', 'Cancelar', false, ScanMode.QR)
                       .then((scan) {
+                    print('Escaneo !!!!!!');
                     _cameraController.insert(scan, 1).then((value) {
                       if (value['success']) {
                         QuickAlert.show(
