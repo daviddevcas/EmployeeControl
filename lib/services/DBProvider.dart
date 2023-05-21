@@ -12,7 +12,7 @@ class DBProvider {
             ''';
   static const String records = '''
             CREATE TABLE records(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            userId INTEGER NOT NULL, typeRecord INTEGER, createdAt DATETIME)
+            userId INTEGER NOT NULL, typeRecord INTEGER, createdAt VARCHAR)
             ''';
   @protected
   static Future<Database> openDB() async {

@@ -21,7 +21,8 @@ class CameraController {
     record.userId = user.id;
     record.typeRecord = typeRecord;
     record.createdAt = DateTime.now();
-    await Record.insert(record);
+    var out = await Record.insert(record);
+    print(out);
     return {"success": true, "message": 'Registro completado.'};
   }
 }
