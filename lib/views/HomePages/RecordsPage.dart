@@ -73,7 +73,7 @@ class RecordsPage extends StatelessWidget {
                                       size: 30,
                                     ),
                                     title: Text(record.user.name),
-                                    subtitle: Text(record.createdAt.toString()),
+                                    subtitle: Text(record.dateToString()),
                                   ))
                               .toList()),
                 )),

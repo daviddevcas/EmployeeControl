@@ -15,7 +15,11 @@ class Record extends DBProvider {
     id = record['id'];
     userId = record['userId'];
     typeRecord = record['typeRecord'];
-    createdAt = DateTime.parse(record['createAt']);
+    createdAt = DateTime.parse(record['createdAt']);
+  }
+
+  String dateToString() {
+    return '${createdAt.day}-${createdAt.month}-${createdAt.year} ${createdAt.hour}:${createdAt.minute}';
   }
 
   Map<String, dynamic> toMap({bool newrecord = false}) {
