@@ -65,7 +65,7 @@ class UserPage extends StatelessWidget {
                     content: Center(
                       child: user.id > 0
                           ? GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 try {
                                   _screenshotController
                                       .capture(
