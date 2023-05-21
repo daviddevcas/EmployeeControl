@@ -25,7 +25,7 @@ class Record extends DBProvider {
       if (!newrecord) 'id': id,
       'userId': userId,
       'typeRecord': typeRecord,
-      'createdAt': createdAt,
+      'createdAt': createdAt.toString(),
     };
   }
 

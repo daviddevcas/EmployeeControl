@@ -2,8 +2,8 @@ import 'package:control_empleados_app/controllers/CameraController.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:control_empleados_app/components/ITitle.dart';
 import 'package:control_empleados_app/tools/Pallete.dart';
-import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:flutter/material.dart';
 
 class CameraPage extends StatelessWidget {
   CameraPage({Key? key}) : super(key: key);
@@ -92,7 +92,6 @@ class CameraPage extends StatelessWidget {
                   FlutterBarcodeScanner.scanBarcode(
                           '#3D8BEF', 'Cancelar', false, ScanMode.QR)
                       .then((scan) {
-                    print('Escaneo !!!!!!');
                     _cameraController.insert(scan, 1).then((value) {
                       if (value['success']) {
                         QuickAlert.show(
