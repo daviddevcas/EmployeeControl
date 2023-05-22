@@ -67,10 +67,10 @@ class RecordsPage extends StatelessWidget {
             children: [
               OptionButton(
                 text: 'Registros generales',
-                pressed: () {
+                onPressed: () {
                   try {
                     _recordsController
-                        .createExcelOfGeneralRecords(
+                        .createExcelOfRecords(
                             isDiary: _recordsController.active.value)
                         .then((_) {
                       QuickAlert.show(
@@ -91,7 +91,28 @@ class RecordsPage extends StatelessWidget {
               ),
               OptionButton(
                 text: 'Registros de no cumplimiento',
-                pressed: () {},
+                onPressed: () {
+                  try {
+                    _recordsController
+                        .createExcelOfRecords(
+                            isDiary: _recordsController.active.value,
+                            isGeneral: false)
+                        .then((_) {
+                      QuickAlert.show(
+                        context: context,
+                        type: QuickAlertType.success,
+                        text: 'Se ha creado el Excel correctamente.',
+                      );
+                    });
+                  } catch (_) {
+                    QuickAlert.show(
+                      context: context,
+                      type: QuickAlertType.error,
+                      title: 'Oops...',
+                      text: 'Lo siento, ha ocurrido un error.',
+                    );
+                  }
+                },
               ),
             ],
           ),
@@ -154,16 +175,16 @@ class RecordsPage extends StatelessWidget {
 }
 
 class OptionButton extends StatelessWidget {
-  const OptionButton({Key? key, required this.text, required this.pressed})
+  const OptionButton({Key? key, required this.text, required this.onPressed})
       : super(key: key);
 
   final String text;
-  final Function pressed;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: pressed(),
+        onPressed: onPressed,
         child: Wrap(
           children: [
             const Icon(

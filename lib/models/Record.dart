@@ -51,11 +51,40 @@ class Record extends DBProvider {
     final db = await DBProvider.openDB();
     final DateFormat formatter =
         isDiary ? DateFormat('yyyy-MM-dd') : DateFormat('yyyy-MM');
+    List<Map<String, Object?>> request;
+    if (typeRecord == -1) {
+      request = await db.query(
+        'records',
+        where: 'createdAt LIKE ?',
+        whereArgs: ['%${formatter.format(DateTime.now())}%'],
+        orderBy: 'createdAt',
+      );
+    } else {
+      request = await db.query(
+        'records',
+        where: 'typeRecord=? AND createdAt LIKE ?',
+        whereArgs: [typeRecord, '%${formatter.format(DateTime.now())}%'],
+        orderBy: 'createdAt',
+      );
+    }
+
+    if (request.isNotEmpty) {
+      return request.map((record) => Record.fromMap(record)).toList();
+    } else {
+      return [];
+    }
+  }
+
+  static Future<List<Record>> readNonCompliance({bool isDiary = true}) async {
+    final db = await DBProvider.openDB();
+    final DateFormat formatter =
+        isDiary ? DateFormat('yyyy-MM-dd') : DateFormat('yyyy-MM');
 
     final request = await db.query(
       'records',
-      where: 'typeRecord=? AND createdAt LIKE ?',
-      whereArgs: [typeRecord, '%${formatter.format(DateTime.now())}%'],
+      where:
+          "((strftime('%H:%m',createdAt) > '09:00' AND typeRecord = 0) OR (strftime('%H:%m',createdAt) < '15:30' AND typeRecord = 1)) AND createdAt LIKE ?",
+      whereArgs: ['%${formatter.format(DateTime.now())}%'],
       orderBy: 'createdAt',
     );
 
