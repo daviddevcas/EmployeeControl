@@ -20,7 +20,6 @@ class FileStorage {
     }
 
     final exPath = directory.path;
-    print("Saved Path: $exPath");
     await Directory(exPath).create(recursive: true);
     return exPath;
   }
@@ -33,15 +32,13 @@ class FileStorage {
     return directory;
   }
 
-  static Future<File> writeCounter(String bytes, String name) async {
+  static Future<File> writeAsBytes(List<int> bytes, String name) async {
     final path = await _localPath;
     // Create a file for the path of
     // device and file name with extension
     File file = File('$path/$name');
-    ;
-    print("Save file");
 
     // Write the data in the file you have created
-    return file.writeAsString(bytes);
+    return file.writeAsBytes(bytes);
   }
 }

@@ -97,8 +97,8 @@ class RecordsController extends GetxController {
     }
 
     final List<int> bytes = workbook.saveAsStream();
-    await FileStorage.writeCounter(bytes.toString(),
-        '${nameFile}_${formatterDate.format(DateTime.now())}.xlsx');
+    await FileStorage.writeAsBytes(
+        bytes, '${nameFile}_${formatterDate.format(DateTime.now())}.xlsx');
     workbook.dispose();
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:control_empleados_app/controllers/UsersController.dart';
 import 'package:control_empleados_app/components/ITextField.dart';
+import 'package:control_empleados_app/services/FileStorage.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
 import 'package:control_empleados_app/components/IButton.dart';
@@ -73,15 +74,10 @@ class UserPage extends StatelessWidget {
                                               const Duration(milliseconds: 10))
                                       .then((image) async {
                                     if (image != null) {
-                                      final directory =
-                                          await getApplicationDocumentsDirectory();
-
-                                      final imagePath = await File(
-                                              '${directory.path}/qr-${user.id}-${user.name}.png')
-                                          .create();
-                                      imagePath
-                                          .writeAsBytes(image)
-                                          .then((value) {
+                                      final List<int> bytes = image.toList();
+                                      FileStorage.writeAsBytes(bytes,
+                                              'qr-${user.id}-${user.name}.png')
+                                          .then((_) {
                                         QuickAlert.show(
                                           context: context,
                                           type: QuickAlertType.success,
