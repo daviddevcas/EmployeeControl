@@ -53,7 +53,7 @@ class RecordsController extends GetxController {
         .getRangeByIndex(1, 1)
         .setText('AYUNTAMIENTO CONSTITUCIONAL DE ESPINAL');
     sheet.getRangeByIndex(2, 1).setText(
-        'CONTROL ${isDiary ? 'DIARIO' : 'MENSUAL'} DE ENTRADAS Y SALIDAS');
+        'CONTROL ${isDiary ? 'DIARIO' : 'MENSUAL'} ${isGeneral ? 'DE ENTRADAS Y SALIDAS' : 'DE NO CUMPLIMIENTO'}');
     sheet
         .getRangeByIndex(2, 4)
         .setText('FECHA: ${formatterDate.format(DateTime.now())}');
