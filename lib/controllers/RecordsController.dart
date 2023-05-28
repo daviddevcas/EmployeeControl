@@ -61,6 +61,7 @@ class RecordsController extends GetxController {
 
       for (var i = 0; i < records.length; i++) {
         final item = records[i];
+        item.user = await item.readUser();
         sheet.getRangeByIndex(i + 5, 1).setText(item.user.name);
         sheet.getRangeByIndex(i + 5, 2).setText(item.user.area);
         sheet.getRangeByIndex(i + 5, 3).setText(item.user.workplace);
@@ -81,6 +82,7 @@ class RecordsController extends GetxController {
 
       for (var i = 0; i < records.length; i++) {
         final item = records[i];
+        item.user = await item.readUser();
         sheet.getRangeByIndex(i + 5, 1).setText(item.user.name);
         sheet.getRangeByIndex(i + 5, 2).setText(item.user.area);
         sheet.getRangeByIndex(i + 5, 3).setText(item.user.workplace);
