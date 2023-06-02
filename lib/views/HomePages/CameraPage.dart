@@ -4,6 +4,7 @@ import 'package:control_empleados_app/components/ITitle.dart';
 import 'package:control_empleados_app/tools/Pallete.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CameraPage extends StatelessWidget {
   CameraPage({Key? key}) : super(key: key);
@@ -57,6 +58,7 @@ class CameraPage extends StatelessWidget {
                           text: value['message'],
                         );
                       }
+                      Get.forceAppUpdate();
                     });
                   });
                 },
@@ -107,6 +109,7 @@ class CameraPage extends StatelessWidget {
                           text: value['message'],
                         );
                       }
+                      Get.forceAppUpdate();
                     });
                   });
                 },
